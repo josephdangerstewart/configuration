@@ -15,3 +15,7 @@ crash.*.log
 # Ignore CLI configuration files
 .terraformrc
 terraform.rc
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
