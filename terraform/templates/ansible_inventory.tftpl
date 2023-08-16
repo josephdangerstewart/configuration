@@ -1,0 +1,4 @@
+[digital_ocean_droplets]
+%{ for ip in digital_ocean_ips ~}
+${ip}
+%{ endfor ~}

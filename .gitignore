@@ -19,3 +19,5 @@ terraform.rc
 # .tfstate files
 *.tfstate
 *.tfstate.*
+
+ansible/terraform_output/*

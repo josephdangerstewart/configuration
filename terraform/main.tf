@@ -18,3 +18,13 @@ resource "digitalocean_droplet" "do_hannah_web02" {
   region     = "SFO2"
   monitoring = true
 }
+
+resource "local_file" "ansible_inventory" {
+  content = templatefile("./templates/ansible_inventory.tftpl", {
+    digital_ocean_ips = [
+      digitalocean_droplet.do_hannah_web01.ipv4_address,
+      digitalocean_droplet.do_hannah_web02.ipv4_address
+    ]
+  })
+  filename = "../ansible/terraform_output/hosts.cfg"
+}
