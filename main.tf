@@ -1,3 +1,4 @@
+# Digital ocean resources
 resource "digitalocean_droplet" "do_hannah_web01" {
   backups    = false
   name       = "do-hannah-web01"
