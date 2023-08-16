@@ -13,4 +13,4 @@ provider "digitalocean" {
   token = var.digital_ocean_token
 }
 
-provider local {}
+provider "local" {}

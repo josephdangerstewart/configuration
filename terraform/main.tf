@@ -13,9 +13,9 @@ resource "digitalocean_droplet" "do_hannah_web01" {
 }
 
 resource "digitalocean_droplet" "do_hannah_web02" {
-  backups    = false
-  name       = "do-hannah-web02"
-  size       = "s-1vcpu-1gb"
+  backups = false
+  name    = "do-hannah-web02"
+  size    = "s-1vcpu-1gb"
 
   # Imported resource, that's why this image is a funky number
   image      = 48826207
@@ -26,7 +26,7 @@ resource "digitalocean_droplet" "do_hannah_web02" {
 resource "digitalocean_ssh_key" "ssh_keys" {
   for_each = local.ssh_keys
 
-  name = each.key
+  name       = each.key
   public_key = each.value
 }
 
