@@ -9,6 +9,9 @@ on:
       node_version:
         type: string
         default: 18.x
+      port:
+        type: string
+        required: true
     secrets:
       ssh_private_key:
         required: true
@@ -51,7 +54,8 @@ jobs:
           WORKSPACE: ${{ github.workspace }}
 
       - name: Start NextJS server
-        run: ssh -o StrictHostKeyChecking=no -i ../deployment_ssh_private_key "root@${DEPLOYMENT_HOST_IP}" "cd /deployments/$(basename $WORKSPACE); yarn; pm2 delete $(basename $WORKSPACE) 2> /dev/null; pm2 start npm --name $(basename $WORKSPACE); pm2 save"
+        run: ssh -o StrictHostKeyChecking=no -i ../deployment_ssh_private_key "root@${DEPLOYMENT_HOST_IP}" "cd /deployments/$(basename $WORKSPACE); yarn; pm2 delete $(basename $WORKSPACE) 2> /dev/null; pm2 start npm --name $(basename $WORKSPACE) -- start -p $PORT; pm2 save"
         env:
           DEPLOYMENT_HOST_IP: ${{ inputs.deployment_host }}
           WORKSPACE: ${{ github.workspace }}
+          PORT: ${{ inputs.port }}
