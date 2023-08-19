@@ -40,7 +40,7 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.ssh_private_key }}
 
       - name: Copy project to deployment deployment_ssh_private_keyserver
-        run: scp -o StrictHostKeyChecking=no -i ../deployment_ssh_private_key -r ./ "root@${DEPLOYMENT_HOST_IP}:/deployments/${REPO_NAME}"
+        run: scp -o StrictHostKeyChecking=no -i ../deployment_ssh_private_key -r ${{ github.workspace }} "root@${DEPLOYMENT_HOST_IP}:/deployments/${REPO_NAME}"
         env:
           DEPLOYMENT_HOST_IP: ${{ inputs.deployment_host }}
           REPO_NAME: ${{ github.repository }}
