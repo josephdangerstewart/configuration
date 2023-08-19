@@ -35,7 +35,7 @@ jobs:
         run: yarn build
 
       - name: Write SSH key
-        run: echo "$SSH_PRIVATE_KEY" >> ./deployment_ssh_private_key
+        run: echo "$SSH_PRIVATE_KEY" > ./deployment_ssh_private_key && chmod 600 ./deployment_ssh_private_key
         env:
           SSH_PRIVATE_KEY: ${{ secrets.ssh_private_key }}
 
