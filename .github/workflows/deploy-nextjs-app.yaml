@@ -51,4 +51,7 @@ jobs:
           WORKSPACE: ${{ github.workspace }}
 
       - name: Start NextJS server
-
+        run: ssh -o StrictHostKeyChecking=no -i ../deployment_ssh_private_key "root@${DEPLOYMENT_HOST_IP}" "cd /deployments/$(basename $WORKSPACE) && pm2 start npm --name $(basename $WORKSPACE) && pm2 save"
+        env:
+          DEPLOYMENT_HOST_IP: ${{ inputs.deployment_host }}
+          WORKSPACE: ${{ github.workspace }}
