@@ -40,7 +40,7 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.ssh_private_key }}
 
       - name: Create deployment folder if necessary
-        run: ssh -o StrictHostKeyChecking=no -i ../deployment_ssh_private_key "root@${DEPLOYMENT_HOST_IP}" 'mkdir -p /deployments/${REPO_NAME}'
+        run: ssh -o StrictHostKeyChecking=no -i ../deployment_ssh_private_key "root@${DEPLOYMENT_HOST_IP}" "mkdir -p /deployments/${REPO_NAME}/"
         env:
           REPO_NAME: ${{ github.repository }}
           DEPLOYMENT_HOST_IP: ${{ inputs.deployment_host }}
