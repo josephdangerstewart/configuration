@@ -39,6 +39,11 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{ secrets.ssh_private_key }}
 
+      - name: Create deployment folder if necessary
+        run: ssh -o StrictHostKeyChecking=no -i ../deployment_ssh_private_key 'mkdir -p /deployments/${REPO_NAME}'
+        env:
+          REPO_NAME: ${{ github.repository }}
+
       - name: Copy project to deployment deployment_ssh_private_keyserver
         run: scp -o StrictHostKeyChecking=no -i ../deployment_ssh_private_key -r ${{ github.workspace }} "root@${DEPLOYMENT_HOST_IP}:/deployments/${REPO_NAME}"
         env:
