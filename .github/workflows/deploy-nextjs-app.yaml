@@ -35,12 +35,12 @@ jobs:
         run: yarn build
 
       - name: Write SSH key
-        run: echo "$SSH_PRIVATE_KEY" > ./deployment_ssh_private_key && chmod 600 ./deployment_ssh_private_key
+        run: echo "$SSH_PRIVATE_KEY" > ../deployment_ssh_private_key && chmod 600 ../deployment_ssh_private_key
         env:
           SSH_PRIVATE_KEY: ${{ secrets.ssh_private_key }}
 
       - name: Copy project to deployment deployment_ssh_private_keyserver
-        run: scp -o StrictHostKeyChecking=no -i ./ -r ./ "root@${DEPLOYMENT_HOST_IP}:/deployments/${REPO_NAME}"
+        run: scp -o StrictHostKeyChecking=no -i ../deployment_ssh_private_key -r ./ "root@${DEPLOYMENT_HOST_IP}:/deployments/${REPO_NAME}"
         env:
           DEPLOYMENT_HOST_IP: ${{ inputs.deployment_host }}
           REPO_NAME: ${{ github.repository }}
