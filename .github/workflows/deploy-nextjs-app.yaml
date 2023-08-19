@@ -35,9 +35,13 @@ jobs:
         run: yarn build
 
       - name: Write SSH key
-        run: echo ${{ secrets.ssh_private_key }} >> ./deployment_ssh_private_key
+        run: echo $SSH_PRIVATE_KEY >> ./deployment_ssh_private_key
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.ssh_private_key }}
 
-      - name: Debug
-        run: ls
-      
+      - name: Copy project to deployment server
+        run: scp -i ./deployment_ssh_private_key -r ./ "root@${DEPLOYMENT_HOST_IP}:~/${REPO_NAME}"
+        env:
+          DEPLOYMENT_HOST_IP: ${{ inputs.deploymnet_host }}
+          REPO_NAME: ${{ github.repository }}
 
