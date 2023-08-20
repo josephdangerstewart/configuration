@@ -1,0 +1,32 @@
+name: Deploy NextJS app
+inputs:
+  deployment_host:
+    required: true
+    type: string
+  ssh_private_key:
+    type: string
+    required: true
+runs:
+  using: composite
+  steps:
+    - name: Write SSH key
+      run: echo "$SSH_PRIVATE_KEY" > ../deployment_ssh_private_key && chmod 600 ../deployment_ssh_private_key
+      env:
+        SSH_PRIVATE_KEY: ${{ inputs.ssh_private_key }}
+
+    - name: Create deployment folder if necessary
+      run: ssh -o StrictHostKeyChecking=no -i ../deployment_ssh_private_key "root@${DEPLOYMENT_HOST_IP}" "mkdir -p /deployments/"
+      env:
+        DEPLOYMENT_HOST_IP: ${{ inputs.deployment_host }}
+
+    - name: Copy project to deployment
+      run: rsync -e "ssh -o StrictHostKeyChecking=no -i ../deployment_ssh_private_key" --exclude="./node_modules/**" -r $WORKSPACE "root@${DEPLOYMENT_HOST_IP}:/deployments/"
+      env:
+        DEPLOYMENT_HOST_IP: ${{ inputs.deployment_host }}
+        WORKSPACE: ${{ github.workspace }}
+
+    - name: Start NextJS server
+      run: ssh -o StrictHostKeyChecking=no -i ../deployment_ssh_private_key "root@${DEPLOYMENT_HOST_IP}" "cd /deployments/$(basename $WORKSPACE); yarn; pm2 delete $(basename $WORKSPACE) 2> /dev/null; pm2 start npm --name $(basename $WORKSPACE) -- start; pm2 save"
+      env:
+        DEPLOYMENT_HOST_IP: ${{ inputs.deployment_host }}
+        WORKSPACE: ${{ github.workspace }}
