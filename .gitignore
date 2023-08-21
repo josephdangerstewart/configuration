@@ -21,3 +21,4 @@ terraform.rc
 *.tfstate.*
 
 ansible/terraform_output/*
+terraform/secrets/*
