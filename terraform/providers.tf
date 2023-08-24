@@ -27,3 +27,5 @@ provider "google" {
   project = var.google_cloud_project
   region  = "us-west2-a"
 }
+
+provider "aws" {}
