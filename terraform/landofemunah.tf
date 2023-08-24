@@ -24,6 +24,21 @@ resource "aws_s3_bucket" "loe_submissions_bucket" {
   bucket = "loe-submissions-bucket"
 }
 
+resource "aws_s3_bucket_ownership_controls" "loe_submissions_bucket" {
+  bucket = aws_s3_bucket.loe_submissions_bucket.id
+  rule {
+    object_ownership = "ObjectWriter"
+  }
+}
+
+resource "aws_s3_bucket_public_access_block" "loe_submissions_bucket" {
+  bucket                  = aws_s3_bucket.loe_submissions_bucket.id
+  block_public_acls       = false
+  block_public_policy     = false
+  ignore_public_acls      = false
+  restrict_public_buckets = false
+}
+
 resource "aws_iam_user" "loe_aws_user" {
   name = "loe-aws-user"
 }
@@ -42,8 +57,8 @@ resource "local_file" "loe_aws_user_key_json" {
 
 data "aws_iam_policy_document" "loe_s3_policy" {
   statement {
-    actions   = ["s3:*"]
-    resources = [aws_s3_bucket.loe_submissions_bucket.arn]
+    actions   = ["s3:PutObject", "s3:PutObjectAcl"]
+    resources = ["*"]
     effect    = "Allow"
   }
 }
