@@ -8,7 +8,11 @@ terraform {
     }
     google = {
       source  = "hashicorp/google"
-      version = "~> 4.78.0"
+      version = ">= 4.78.0, < 5.0.0"
+    }
+    aws = {
+      source  = "hashicorp/aws"
+      version = ">= 5.13.1, < 6.0.0"
     }
   }
 }

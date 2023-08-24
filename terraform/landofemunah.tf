@@ -20,6 +20,10 @@ resource "google_project_iam_member" "loe_sa_recaptcha_permissions" {
   member  = "serviceAccount:${google_service_account.loe_service_account.email}"
 }
 
+resource "aws_s3_bucket" "loe_submissions_bucket" {
+  bucket = "loe-submissions-bucket"
+}
+
 resource "google_recaptcha_enterprise_key" "loe_recaptcha" {
   display_name = "loe_recaptcha"
   labels       = {}
