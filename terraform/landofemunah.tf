@@ -24,6 +24,36 @@ resource "aws_s3_bucket" "loe_submissions_bucket" {
   bucket = "loe-submissions-bucket"
 }
 
+resource "aws_iam_user" "loe_aws_user" {
+  name = "loe-aws-user"
+}
+
+resource "aws_iam_access_key" "loe_aws_user" {
+  user = aws_iam_user.loe_aws_user.name
+}
+
+resource "local_file" "loe_aws_user_key_json" {
+  content = jsonencode({
+    "accessKeyId"     = aws_iam_access_key.loe_aws_user.id
+    "secretAccessKey" = aws_iam_access_key.loe_aws_user.secret
+  })
+  filename = "secrets/loe_aws_user_key.json"
+}
+
+data "aws_iam_policy_document" "loe_s3_policy" {
+  statement {
+    actions   = ["s3:*"]
+    resources = [aws_s3_bucket.loe_submissions_bucket.arn]
+    effect    = "Allow"
+  }
+}
+
+resource "aws_iam_user_policy" "loe_aws_user" {
+  name   = "loe-aws-user-policy"
+  user   = aws_iam_user.loe_aws_user.name
+  policy = data.aws_iam_policy_document.loe_s3_policy.json
+}
+
 resource "google_recaptcha_enterprise_key" "loe_recaptcha" {
   display_name = "loe_recaptcha"
   labels       = {}
