@@ -16,7 +16,8 @@ Follow these steps to setup a new local machine to modify and apply configuratio
 
 1. Install and login to the [gcloud cli](https://cloud.google.com/sdk/gcloud#download_and_install_the)
 2. Install and login to the [aws cli](https://aws.amazon.com/cli/)
-3. Generate a new digital ocean API token and add it to a new `secrets.auto.tfvars` file at the root of this repo like so
+3. Ensure your **public** ssh key has been added to the `ssh_keys` folder and added to all of the host vms
+4. Generate a new digital ocean API token and add it to a new `secrets.auto.tfvars` file at the root of this repo like so
 
 ```hcl
 digital_ocean_token = <DO_TOKEN>
