@@ -34,3 +34,5 @@ In `/ansible` on WSL
 
 * Run `ansible-playbook -i terraform_output/hosts.cfg --check <playbook.yml>` to test the output of a playbook
 * Run `ansible-playbook -i terraform_output/hosts.cfg <playbook.yml>` to apply a playbook
+
+> **Important**: Terraform generates the ansible inventory, so ensure that terraform has been applied locally before running ansible
