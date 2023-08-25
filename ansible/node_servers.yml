@@ -1,0 +1,5 @@
+---
+- name: Provision node servers
+  hosts: node_servers
+  roles:
+    - ssh
