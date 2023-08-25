@@ -32,7 +32,7 @@ resource "digitalocean_ssh_key" "ssh_keys" {
 
 resource "local_file" "ansible_inventory" {
   content = templatefile("./templates/ansible_inventory.tftpl", {
-    digital_ocean_ips = [
+    node_servers = [
       digitalocean_droplet.do_hannah_web01.ipv4_address,
       digitalocean_droplet.do_hannah_web02.ipv4_address
     ]

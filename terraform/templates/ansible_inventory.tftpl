@@ -1,7 +1,7 @@
-[digital_ocean_droplets:vars]
+[node_servers:vars]
 ansible_user=root
 
-[digital_ocean_droplets]
-%{ for ip in digital_ocean_ips ~}
+[node_servers]
+%{ for ip in node_servers ~}
 ${ip}
 %{ endfor ~}
