@@ -20,6 +20,31 @@ resource "google_project_iam_member" "loe_sa_recaptcha_permissions" {
   member  = "serviceAccount:${google_service_account.loe_service_account.email}"
 }
 
+resource "aws_s3_bucket" "loe_public_bucket" {
+  bucket = "loe-public"
+}
+
+resource "aws_s3_bucket_ownership_controls" "loe_public_bucket" {
+  bucket = aws_s3_bucket.loe_public_bucket.id
+  rule {
+    object_ownership = "ObjectWriter"
+  }
+}
+
+resource "aws_s3_bucket_public_access_block" "loe_public_bucket" {
+  bucket                  = aws_s3_bucket.loe_public_bucket.id
+  block_public_acls       = false
+  block_public_policy     = false
+  ignore_public_acls      = false
+  restrict_public_buckets = false
+}
+
+resource "aws_s3_bucket_acl" "loe_public_bucket" {
+  depends_on = [aws_s3_bucket_ownership_controls.loe_public_bucket]
+  bucket     = aws_s3_bucket.loe_public_bucket.id
+  acl        = "public-read"
+}
+
 resource "aws_s3_bucket" "loe_submissions_bucket" {
   bucket = "loe-submissions-bucket"
 }
