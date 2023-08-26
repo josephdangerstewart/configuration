@@ -1,4 +1,4 @@
-# Resources specifically for land of emunah (DNS, captcha, etc)
+# Resources specifically for land of emunah (S3, CDN, captcha, etc)
 
 locals {
   s3_cdn_id = "loeS3Origin"
