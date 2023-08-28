@@ -21,7 +21,7 @@ runs:
         DEPLOYMENT_HOST_IP: ${{ inputs.deployment_host }}
 
     - name: Copy project to deployment
-      run: rsync -e "ssh -o StrictHostKeyChecking=no -i ../deployment_ssh_private_key" --exclude="./node_modules/**" -r $WORKSPACE "root@${DEPLOYMENT_HOST_IP}:/deployments/"
+      run: rsync --delete -e "ssh -o StrictHostKeyChecking=no -i ../deployment_ssh_private_key" --exclude="./node_modules/**" -r $WORKSPACE "root@${DEPLOYMENT_HOST_IP}:/deployments/"
       shell: bash
       env:
         DEPLOYMENT_HOST_IP: ${{ inputs.deployment_host }}
