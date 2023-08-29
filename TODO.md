@@ -1,0 +1,11 @@
+- [ ] Bring infrastrucutre for josephlikescode into this repo
+	- [ ] Add terraform for Vercel project
+	- [ ] Move static assets into a terraform managed s3 bucket
+- [ ] Manage hannahcreatesart.com from this repo
+	- [ ] Add deployment github action
+	- [ ] Manage nginx config through ansible
+	- [ ] Manage ssl certs through ansible
+- [ ] Manage wearehunnyandthebee.com from this repo
+	- [ ] Add GHA deployment
+	- [ ] Manage nginx config through ansible
+	- [ ] Manage ssl certs through ansible
