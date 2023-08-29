@@ -1,0 +1,4 @@
+---
+- name: Run nginx play if config file present
+  include_tasks: nginx.yml
+  when: lookup('file', 'templates/' + inventory_hostname + '/nginx.conf', errors='warn')

@@ -8,12 +8,20 @@
     path: /etc/letsencrypt/live/{{ item }}/cert.pem
   register: letsencrypt_cert
   with_items: "{{ ssl_domains }}"
+- name: Copy common nginx config
+  template:
+    src: nginx.conf
+    dest: "/etc/letsencrypt/options-ssl-nginx.conf"
+- name: Get ssldhparams
+  get_url:
+    dest: "/etc/letsencrypt/ssl-dhparams.pem"
+    url: https://ssl-config.mozilla.org/ffdhe2048.txt
 - name: Stop services to allow certbot to generate a cert.
   service:
     name: nginx
     state: stopped
 - name: Generate new certificate if one doesn't exist.
-  shell: "certbot certonly --standalone --noninteractive --agree-tos --email {{ my_email }} -d {{ item.item }}"
+  shell: "certbot certonly --standalone --nginx --noninteractive --agree-tos --email {{ my_email }} -d {{ item.item }}"
   with_items: "{{ letsencrypt_cert.results }}"
   when: item.stat.exists == False
 - name: Start services after cert has been generated.

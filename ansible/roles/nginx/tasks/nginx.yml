@@ -1,0 +1,13 @@
+---
+- name: Ensure Nginx is installed
+  apt:
+    name: nginx
+    state: present
+- name: Copy template
+  template:
+    src: "../../../templates/{{ inventory_hostname }}/nginx.conf"
+    dest: "/etc/nginx/sites-enabled/default"
+- name: Restart service
+  service:
+    state: restarted
+    name: nginx

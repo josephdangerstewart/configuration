@@ -1,8 +1,9 @@
 ---
 - name: Provision node servers
   hosts: node_servers
-  var_files:
+  vars_files:
     - /secret_vars/secrets.yml
   roles:
     - ssh
     - certbot
+    - nginx
