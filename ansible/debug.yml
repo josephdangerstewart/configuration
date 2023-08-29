@@ -1,5 +1,0 @@
----
-- name: Debug
-  hosts: node_servers
-  roles:
-    - nginx
