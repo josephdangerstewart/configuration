@@ -1,0 +1,4 @@
+---
+- name: "Run play if ssl_domains is defined"
+  include_tasks: ssl.yml
+  when: ssl_domains is defined

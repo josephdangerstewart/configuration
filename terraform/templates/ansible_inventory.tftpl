@@ -2,6 +2,6 @@
 ansible_user=root
 
 [node_servers]
-%{ for ip in node_servers ~}
-${ip}
+%{ for server in node_servers ~}
+${server.name} ansible_host=${server.ipv4_address}
 %{ endfor ~}

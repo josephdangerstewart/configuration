@@ -23,6 +23,14 @@ Follow these steps to setup a new local machine to modify and apply configuratio
 digital_ocean_token = <DO_TOKEN>
 ```
 
+### Other secrets
+
+1. Add the following to `./ansible/secret_vars/secrets.yml`
+
+```yml
+my_email: <my email>
+```
+
 ## Commands
 
 In `/terraform`
