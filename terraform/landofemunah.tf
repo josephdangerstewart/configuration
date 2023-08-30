@@ -24,6 +24,16 @@ resource "google_project_iam_member" "loe_sa_recaptcha_permissions" {
   member  = "serviceAccount:${google_service_account.loe_service_account.email}"
 }
 
+resource "google_recaptcha_enterprise_key" "loe_recaptcha" {
+  display_name = "loe_recaptcha"
+  labels       = {}
+
+  web_settings {
+    integration_type  = "SCORE"
+    allow_all_domains = true
+  }
+}
+
 resource "aws_s3_bucket" "loe_public_bucket" {
   bucket = "loe-public"
 }
@@ -165,14 +175,4 @@ resource "aws_iam_user_policy" "loe_aws_user" {
   name   = "loe-aws-user-policy"
   user   = aws_iam_user.loe_aws_user.name
   policy = data.aws_iam_policy_document.loe_s3_policy.json
-}
-
-resource "google_recaptcha_enterprise_key" "loe_recaptcha" {
-  display_name = "loe_recaptcha"
-  labels       = {}
-
-  web_settings {
-    integration_type  = "SCORE"
-    allow_all_domains = true
-  }
 }
